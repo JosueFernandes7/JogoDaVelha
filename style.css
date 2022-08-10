@@ -14,12 +14,12 @@ body {
   height: 80px;
   background-image: linear-gradient(to right, var(--elementLeft) 50%, var(--elementRight) 50% );
 }
-.square{
-  background: red;
+.equix{
+  visibility: hidden;
   position: relative;
 }
-.square::after,
-.square::before {
+.equix::after,
+.equix::before {
   visibility: visible;
   content: '';
   background-image: linear-gradient(to right, var(--elementLeft) 33%,var(--elementRight) 50%);
@@ -30,10 +30,10 @@ body {
   border-radius: 4px;
 }
 
-.square::after{
+.equix::after{
   transform: translateY(-50%) rotate(45deg);
 }
-.square::before{
+.equix::before{
   transform: translateY(-50%) rotate(-45deg);
 }
 
