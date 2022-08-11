@@ -7,12 +7,37 @@
 body {
   background: #50206C;
 }
+.gameBoard {
+  /* background: var(--internBG); */
+  max-width: 320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3,auto);
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid #fff;
+}
 .defaultElement {
+  cursor: pointer;
   margin-right: 10px;
   display: inline-block;
   width: 80px;
   height: 80px;
-  background-image: linear-gradient(to right, var(--elementLeft) 50%, var(--elementRight) 50% );
+  background: var(--internBG);
+}
+.ativo {
+  display: block;
+  animation: opacity 2s forwards;
+}
+@keyframes opacity{
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .equix{
   visibility: hidden;
@@ -37,7 +62,15 @@ body {
   transform: translateY(-50%) rotate(-45deg);
 }
 
-
 .circle{
+  background-image: linear-gradient(to right, var(--elementLeft) 50%, var(--elementRight) 50% );
   border-radius: 100%;
+}
+
+.winner {
+  opacity: 0;
+  margin: 0 auto;
+  text-align: center;
+  padding-block:10px;
+  color: #fff;
 }
