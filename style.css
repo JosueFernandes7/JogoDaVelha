@@ -8,6 +8,7 @@ body {
   background: #50206C;
 }
 .gameBoard {
+  position: relative;
   /* background: var(--internBG); */
   max-width: 320px;
   margin: 0 auto;
@@ -39,12 +40,13 @@ body {
     opacity: 1;
   }
 }
-.equix{
+.xis{
+  font-size: 0 !important;
   visibility: hidden;
   position: relative;
 }
-.equix::after,
-.equix::before {
+.xis::after,
+.xis::before {
   visibility: visible;
   content: '';
   background-image: linear-gradient(to right, var(--elementLeft) 33%,var(--elementRight) 50%);
@@ -55,14 +57,15 @@ body {
   border-radius: 4px;
 }
 
-.equix::after{
+.xis::after{
   transform: translateY(-50%) rotate(45deg);
 }
-.equix::before{
+.xis::before{
   transform: translateY(-50%) rotate(-45deg);
 }
 
-.circle{
+.bolinha{
+  font-size: 0 !important;
   background-image: linear-gradient(to right, var(--elementLeft) 50%, var(--elementRight) 50% );
   border-radius: 100%;
 }
@@ -73,4 +76,31 @@ body {
   text-align: center;
   padding-block:10px;
   color: #fff;
+}
+
+.novoJogo {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  background: red;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  color: #fff;
+  animation: slideRight 2s;
+  display: none;
+}
+.novoJogo button {
+  cursor: pointer;
+}
+
+@keyframes slideRight{
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

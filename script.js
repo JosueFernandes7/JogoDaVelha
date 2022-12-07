@@ -1,99 +1,51 @@
-const ganhador = document.querySelector('.winner')
-const positions = document.querySelectorAll(".defaultElement");
+import gameBoard from './gameBoard.js';
 
-positions.forEach((pos) => {
-  pos.addEventListener("click", insertElement);
-});
+const posicoes = document.querySelectorAll('.defaultElement')
+let vencedor = document.querySelector('.winner')
+let novoJogo = document.querySelector('.novoJogo');
+let jogo = new gameBoard(posicoes);
 
-let jogadas = 0;
-let jogador = 0;
-function insertElement(event) {
-  jogadas++
-  const item = event.target;
-  let winner = false;
-  let empate = false;
-  if (jogadas == 9) empate = true;
+posicoes.forEach((pos) => {
+  pos.addEventListener('click', comecarJogo)
+})
 
-  if (!item.classList.contains("ativo")) {
-    if (jogador % 2 == 0) {
-      item.classList.add("equix", "ativo");
-      jogador = 1;
-    } else {
-      item.classList.add("circle", "ativo");
-      jogador = 0;
-    }
-    // Eixo X
-    for (let i = 0; i < positions.length; i += 3) {
-      if (
-        (positions[i].classList.contains("circle") &&
-          positions[i + 1].classList.contains("circle") &&
-          positions[i + 2].classList.contains("circle")) ||
-        (positions[i].classList.contains("equix") &&
-          positions[i + 1].classList.contains("equix") &&
-          positions[i + 2].classList.contains("equix"))
-      ) {
-        winner = true;
-        if(winner) break;
-      }
-    }
-    // Eixo Y
-    for (let i = 0; i < 3; i ++) {
-      if (
-        (positions[i].classList.contains("circle") &&
-          positions[i + 3].classList.contains("circle") &&
-          positions[i + 6].classList.contains("circle")) ||
-        (positions[i].classList.contains("equix") &&
-          positions[i + 3].classList.contains("equix") &&
-          positions[i + 6].classList.contains("equix"))
-      ) {
-        winner = true;
-        if(winner) break;
-      }
-    }
-    // vertical left
-    if (
-      (positions[0].classList.contains("circle") &&
-        positions[4].classList.contains("circle") &&
-        positions[8].classList.contains("circle")) ||
-      (positions[0].classList.contains("equix") &&
-        positions[4].classList.contains("equix") &&
-        positions[8].classList.contains("equix"))
-    ) {
-      winner = true;
-    }
-    // vertical right
-    if (
-      (positions[2].classList.contains("circle") &&
-        positions[4].classList.contains("circle") &&
-        positions[6].classList.contains("circle")) ||
-      (positions[2].classList.contains("equix") &&
-        positions[4].classList.contains("equix") &&
-        positions[6].classList.contains("equix"))
-    ) {
-      winner = true;
-    }
 
-    if(winner) {
-      if(jogador == 0) {
-        ganhador.innerText = 'O VENCEU';
-        ganhador.classList.add('ativo');
-      } else {
-        ganhador.innerText = 'X VENCEU';
-        ganhador.classList.add('ativo');
-      }
-      // remove o event
-      positions.forEach(pos => {
-        pos.removeEventListener('click',insertElement);
+let jogar = document.querySelector('.sim')
+let naoJogar = document.querySelector('.nao')
+
+let possibilidadesFinais = [jogar, naoJogar];
+possibilidadesFinais.forEach((e) => {
+  e.addEventListener('click', (e) => {
+    let alvo = e.target
+
+    if (alvo == jogar) {
+      jogo.iniciarNovoJogo()
+      vencedor.innerText = ' ';
+    } else if (alvo == naoJogar) {
+      vencedor.innerText = 'Que pena :C'
+      posicoes.forEach((pos) => {
+        pos.removeEventListener('click',comecarJogo)
       })
     }
-    if(empate) {
-      ganhador.innerText = 'EMPATE';
-      ganhador.classList.add('ativo');
-      // remove o event
-      positions.forEach(pos => {
-        pos.removeEventListener('click',insertElement);
-      })
+    novoJogo.style.display = 'none'
+  })
+})
 
+  function comecarJogo(e) {
+    let pos = e.target
+    jogo.inserirElemento(pos)
+    if (jogo.fimGame) {
+      vencedor.style.opacity = 1
+      vencedor.innerText = jogo.resultado()
+  
+      let time = 0
+      // passar 2 segundos
+      let timer = setInterval(() => {
+        if (time > 1000) {
+          clearInterval(timer)
+          novoJogo.style.display = 'block'
+        }
+        time += 1000
+      }, 1000)
     }
   }
-}
